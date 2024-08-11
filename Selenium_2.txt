@@ -1,0 +1,28 @@
+public class FunctionalTesting {
+
+	public static void main(String[] args) throws InterruptedException, AWTException {
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		driver.get("https://www.fitpeo.com/revenue-calculator");
+		driver.findElement(By.xpath("//div[contains(text(),'Revenue Calculator')]")).click();
+		Thread.sleep(2000);
+		Robot rb=new Robot();
+		rb.keyPress(KeyEvent.VK_PAGE_DOWN);
+		rb.keyRelease(KeyEvent.VK_PAGE_DOWN);
+		WebElement pass=driver.findElement(By.xpath("//input[@aria-orientation=\"horizontal\"]"));
+		for(; ;) {
+			if(pass.getAttribute("value").contains("820")) {
+				break;
+			}
+			pass.sendKeys(Keys.ARROW_RIGHT);
+			
+		}
+			Thread.sleep(1000);
+			pass.clear();
+			Thread.sleep(1000);
+			WebElement d=driver.findElement(By.xpath("//input[@type='number']"));
+			JavascriptExecutor js=(JavascriptExecutor)driver;
+			js.executeScript("arguments[0].value='820'", d);
+	}
+	}
